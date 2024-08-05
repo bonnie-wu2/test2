@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        // JavaScript function to fetch and display weather data
+        function getweather() {
+            var city = document.getElementById("search").value;
+            var units = document.getElementById("units").value;
+            var apiKey = "d2dda5a067msh26327237b9ff85dp18f58ejsn0b86f84efa1d";
+            var apiUrl = "https://weatherapi-com.p.rapidapi.com/current.json?q=" + city + "&units=" + units;
+
+            fetch(apiUrl, {
+                method: "GET",
+                headers: {
+                    "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
+                    "X-RapidAPI-Key": apiKey,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("output").innerHTML = "Error: " + data.error.message;
+                } 
+                else {
+                    var temp, fl;
+                    if (units == "f") {
+                        temp = "temp_f";
+                        fl = "feelslike_f";
+                    } 
+                    else {
+                        temp = "temp_c";
+                        fl = "feelslike_c";
+                    }
+                    document.getElementById("output").innerHTML = "<h1>" + data.current.condition.text + "</h1>Temperature: " + data.current[temp] + "°<br>Feels like: " + data.current[fl] + "°<br>UV index: " + data.current.uv + "<br>Humidity: " + data.current.humidity + "%<br>Cloud cover: " + data.current.cloud + "%";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("output").innerHTML = "Unable to fetch weather data.";
+            });
+        }
+    </script>
+
+    <style>
+        .rounded-box {
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+        }
+        .box1 {
+            background-color: #F2EEEE;
+        }
+        .box2 {
+            background-color: #FFC3C3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <a href="#">
+                    <img src="psm_logo.png" alt="PSM logo">
+                </a>
+            </div>
+            <ul class="navbar-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="startups.html">Startups</a></li>
+                <li class="top-dropdown">
+                    <a href="#">Analytics <span>&#9662;</span></a>
+                    <ul class="top-dropdown-contents">
+                        <li><a href="logs.html">Logs</a></li>
+                        <li><a href="simulate.html">Simulate Startup</a></li>
+                        <li><a href="predictions.html">Predictions</a></li>
+                        <li><a href="nox.html">NOx Models</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="navbar-profile">
+                <a href="#">
+                    <img src="user.svg" alt="Profile Icon">
+                </a>
+            </div>
+        </nav>
+    </header>
+    <!-- Alert Message -->
+    <div class="alert">
+        <!-- <p>This is an alert <span class="dismiss-alert">&times;</span></p> -->
+    </div>
+    <!-- Welcome message -->
+    <div class="cover-photo-home"> 
+        <img src="cover.PNG" alt="Cover Photo">
+        <div class="cover-text">
+            <h1>Welcome Back!</h1>
+        </div>
+    </div>
+
+    <!-- WEATHER BUTTON -->
+    <!-- Floating button -->
+    <button id="weatherButton">☁️</button>
+
+    <!-- Modal overlay -->
+    <div id="modalOverlay"></div>
+
+    <!-- Weather modal -->
+    <div id="weatherModal">
+        <button class="close" onclick="closeModal()">✖</button>
+        <h2>Weather Information</h2>
+        <input type="text" placeholder="City" id="search">
+        <select id="units">
+            <option value="f">Fahrenheit</option>
+            <option value="c">Celsius</option>
+        </select>
+        <button onclick="getweather()">Get weather!</button>
+        <div id="output"></div>
+    </div>
+    <script src="script.js"></script>
+
+    <!-- Rounded Text Boxes -->
+    <div class="rounded-box box1">
+        <h2>Summary Stats</h2>
+        <p>18.6 MWhrs lost to cumulative failed starts</p>
+        <p>6.4 cumulative hours added to the time to reach load</p>
+        <p>This event took 55 minutes longer than typical</p>
+        <p>70 starts</p>
+        <p>14 unusual starts </p>
+        <p>20% of starts are unusual</p>
+        <p>On average the fleet comes up to Load 1.6% faster</p>
+    </div>
+    <div class="rounded-box box2">
+        <h2>Turbine Data</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            <br><br>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+
+    
+    <!-- Text -->
+    <!-- <div class="main-content">
+        <div class="summary-stats-text">
+            <pre><h2>
+            Summary stats</h2>
+            
+            18.6 MWhrs lost to cumulative failed starts
+            6.4 cumulative hours added to the time to reach load 
+            This event took 55 minutes longer than typical
+            70 starts
+            14 unusual starts 
+            20% of starts are unusual
+            On average the fleet comes up to Load 1.6% faster
+            </pre>
+        </div>
+
+        <div class="dummy-text">
+            <h2>Turbine data</h2>
+            <pre>
+        18.6 MWhrs lost to cumulative failed starts
+        6.4 cumulative hours added to the time to reach load 
+        This event took 55 minutes longer than typical
+        70 starts
+        14 unusual starts 
+        20% of starts are unusua
+        On average the fleet comes up to Load 1.6% faster
+            </pre>
+        </div>
+    </div> -->
+
+
+    <div id="weather_element">
+        <input type="text" placeholder="City" id="search">
+        <select id="units">
+            <option value="f">Fahrenheit</option>
+            <option value="c">Celsius</option>
+        </select>
+        <button onclick="getweather()">Get weather!</button>
+        <div id="output"></div>
+    </div>
+    
+</body>
+</html>
